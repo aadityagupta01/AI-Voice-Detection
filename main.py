@@ -29,6 +29,29 @@ model = joblib.load(MODEL_PATH)
 # Initialize FastAPI
 app = FastAPI(title="AI Voice Detection API")
 
+@app.get("/")
+def root():
+    """Root Endpoint - Basic Service Check"""
+    return {
+        "service": "AI Voice Detection API",
+        "status": "running",
+        "version": "1.0",
+        "endpoints": {
+            "health": "/health",
+            "detection": "/api/voice-detection"
+        }
+    }
+
+@app.get("/health")
+def health_check():
+    """Health Check Endpoint for Monitoring Services"""
+    return {
+        "status": "healthy",
+        "service": "AI Voice Detection API",
+        "model_loaded": model is not None,
+        "supported_languages": SUPPORTED_LANGUAGES
+    }
+
 # Request body schema
 class VoiceRequest(BaseModel):
     language: str
