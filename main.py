@@ -161,7 +161,7 @@ def detect_voice(req: VoiceRequest, x_api_key: str = Header(...)):
         proba_all = model.predict_proba(features)[0]
         proba = float(proba_all[pred])  # Probability of the Predicted Class
     else:
-        proba = 0.5  # Neutral confidence when unavailable
+        proba = 0.5  # Neutral Confidence when Unavailable
     
     classification = "HUMAN" if pred == 1 else "AI_GENERATED"
     explanation = explain_prediction(pred, proba)
